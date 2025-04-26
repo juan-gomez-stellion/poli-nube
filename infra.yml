@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Mi primera plantilla de infraestructura como código'
+
+Parameters:
+  BucketNameParameter:
+    Type: String
+    Description: Nombre del bucket
+    Default: bucket-jeg-polinube2
+
+  InstanceName:
+    Type: String
+    Description: Nombre de la instancia
+    Default: jeg-instance
+
+Resources:
+
+  BucketS3:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: !Ref BucketNameParameter
+
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0e449927258d45bc4  
+      Tags:
+        - Key: Name
+          Value: !Ref InstanceName
+
+
+Outputs:
+
+  BucketArnExport:
+    Description: ARN del bucket S3
+    Value: !GetAtt BucketS3.Arn
+    Export:
+      Name: BucketS3-ARN

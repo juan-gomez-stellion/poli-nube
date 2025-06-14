@@ -16,5 +16,10 @@ phases:
 
   build:
     commands:
-      - echo "Running our build commands...."
+      - echo "Packing SAM template...."
+      - sam package --output-template-file packaged.yaml --s3-bucket bucket-juan-images
+
+  artifacts:
+    files:
+      - packaged.yaml
 

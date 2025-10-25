@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Plantilla para crear una instancia EC2 con un grupo de seguridad básico."
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t3.micro
+    Description: "Tipo de instancia EC2"
+
+
+Mappings:
+  RegionMap:
+    us-east-1:
+      AMI: ami-0e6f2174f7905500
+    eu-west-1:
+      AMI: ami-0d58e072f8926f4ba
+
+  
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      ImageId: !FindInMap [ RegionMap, !Ref "AWS::Region", AMI ]
+
+
+
